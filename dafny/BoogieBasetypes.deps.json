@@ -1,0 +1,37 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1/win-x64",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {},
+    ".NETCoreApp,Version=v3.1/win-x64": {
+      "BoogieBasetypes/1.0.0": {
+        "dependencies": {
+          "BoogieCodeContractsExtender": "1.0.0"
+        },
+        "runtime": {
+          "BoogieBasetypes.dll": {}
+        }
+      },
+      "BoogieCodeContractsExtender/1.0.0": {
+        "runtime": {
+          "BoogieCodeContractsExtender.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "BoogieBasetypes/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BoogieCodeContractsExtender/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

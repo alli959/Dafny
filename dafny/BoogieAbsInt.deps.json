@@ -1,0 +1,95 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1/win-x64",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {},
+    ".NETCoreApp,Version=v3.1/win-x64": {
+      "BoogieAbsInt/1.0.0": {
+        "dependencies": {
+          "BoogieBasetypes": "1.0.0",
+          "BoogieCodeContractsExtender": "1.0.0",
+          "BoogieCore": "1.0.0",
+          "BoogieParserHelper": "1.0.0"
+        },
+        "runtime": {
+          "BoogieAbsInt.dll": {}
+        }
+      },
+      "BoogieBasetypes/1.0.0": {
+        "dependencies": {
+          "BoogieCodeContractsExtender": "1.0.0"
+        },
+        "runtime": {
+          "BoogieBasetypes.dll": {}
+        }
+      },
+      "BoogieCodeContractsExtender/1.0.0": {
+        "runtime": {
+          "BoogieCodeContractsExtender.dll": {}
+        }
+      },
+      "BoogieCore/1.0.0": {
+        "dependencies": {
+          "BoogieBasetypes": "1.0.0",
+          "BoogieCodeContractsExtender": "1.0.0",
+          "BoogieGraph": "1.0.0",
+          "BoogieParserHelper": "1.0.0"
+        },
+        "runtime": {
+          "BoogieCore.dll": {}
+        }
+      },
+      "BoogieGraph/1.0.0": {
+        "dependencies": {
+          "BoogieCodeContractsExtender": "1.0.0"
+        },
+        "runtime": {
+          "BoogieGraph.dll": {}
+        }
+      },
+      "BoogieParserHelper/1.0.0": {
+        "dependencies": {
+          "BoogieCodeContractsExtender": "1.0.0"
+        },
+        "runtime": {
+          "BoogieParserHelper.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "BoogieAbsInt/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BoogieBasetypes/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BoogieCodeContractsExtender/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BoogieCore/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BoogieGraph/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BoogieParserHelper/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
