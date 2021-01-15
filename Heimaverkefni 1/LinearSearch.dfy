@@ -31,21 +31,21 @@ method SearchRecursive( a: seq<int>, i: int, j: int, x: int ) returns (k: int)
     // but recursion should be used, and it
     // is not allowed to call the function
     // SearchLoop below.
-
-    var q := i;
-    if j == i || j == 0
+    
+    if j == i
     {
         k := -1;
         return;
     }
-    if a[q] == x
+    if a[j-1] == x
     {
-        k := q;
+        k := j-1;
         return;
+
     }
     else
     {
-        k := SearchRecursive(a, q+1, j, x);
+        k := SearchRecursive(a, i, j-1, x);
     }
 }
 
