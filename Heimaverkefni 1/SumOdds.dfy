@@ -33,11 +33,12 @@ function SumOdds( n: int ): int
 lemma ProveSumOdds( n: int )
     // Put requires and ensures clauses here that
     // ensure that the formula to prove is true.
-    ...
+    requires n >= 0;
+    ensures SumOdds(n) == n*n;
 {
     // Put a body here that suffices to convince
     // Dafny that the lemma is true.
-    ...
+
 }
 
 method ComputeSumOddsLoop( n: int ) returns (s: int)
@@ -58,11 +59,14 @@ method ComputeSumOddsRecursive( n: int ) returns (s: int)
     ensures s == SumOdds(n);
     ensures s == n*n;
 {
-    // Put a body here that computes the sum
-    // recursively from left to right.
-    // Looping is not allowed and you may not
-    // call ComputeSumOddsLoop.
-    ...
+    if n == 0
+    {
+        s := 0;
+        return;
+    }
+    s := ComputeSumOddsRecursive(n-1);
+    s := s + n(n + 1)/2;
+    
 }
 
 // If SumOdds is correct then this lemma will work.

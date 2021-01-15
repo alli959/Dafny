@@ -17,6 +17,7 @@
 // this file.
 
 method SearchRecursive( a: seq<int>, i: int, j: int, x: int ) returns (k: int)
+    decreases j-i;
     requires 0 <= i <= j <= |a|;
     ensures i <= k < j || k == -1;
     ensures k != -1 ==> a[k] == x;
@@ -30,7 +31,22 @@ method SearchRecursive( a: seq<int>, i: int, j: int, x: int ) returns (k: int)
     // but recursion should be used, and it
     // is not allowed to call the function
     // SearchLoop below.
-    if i > k || k >= j { return -1; }
+
+    var q := i;
+    if j == i || j == 0
+    {
+        k := -1;
+        return;
+    }
+    if a[q] == x
+    {
+        k := q;
+        return;
+    }
+    else
+    {
+        k := SearchRecursive(a, q+1, j, x);
+    }
 }
 
 method SearchLoop( a: seq<int>, i: int, j: int, x: int ) returns (k: int)
@@ -47,12 +63,10 @@ method SearchLoop( a: seq<int>, i: int, j: int, x: int ) returns (k: int)
     // SearchRecursive above.
     
     k := -1;
-    var r := i;
-    if r != j
-    {
+    var r := j;
 
-        while r != j
-            decreases j-r;
+        while r != i
+            decreases r;
             invariant 0 <= i <= j <= |a|;
             invariant i <= k < j || k == -1;
             invariant k != -1 ==> a[k] == x;
@@ -64,15 +78,14 @@ method SearchLoop( a: seq<int>, i: int, j: int, x: int ) returns (k: int)
             if a[r] == x
             {
                 k := r;
+                return;
             }
 
-            r := r + 1;
+            r := r - 1;
 
             
         }
-    }
 
-    return k;
           
 
 }
@@ -80,7 +93,7 @@ method SearchLoop( a: seq<int>, i: int, j: int, x: int ) returns (k: int)
 
 method Main() {
     var a := [1,2,3,4];
-    var x := SearchLoop(a,1,2,3);
+    var x := SearchRecursive(a,1,2,3);
     print x;
 
 }
