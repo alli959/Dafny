@@ -1,8 +1,8 @@
 // Author of question: Snorri Agnarsson
 // Permalink of question: https://rise4fun.com/Dafny/wuXa
 
-// Author of solution:    Alexander Guðmundsson
-// Permalink of solution: https://rise4fun.com/Dafny/9slQL
+// Author of solution:    ...
+// Permalink of solution: https://rise4fun.com/Dafny/?????
 
 // Use the command
 //   dafny SumOdds-skeleton.dfy
@@ -31,22 +31,7 @@ function SumOdds( n: int ): int
 // We want to prove that
 // 1+3+5+...+(2*n-1) == n^2
 
-lemma ProveSumOdds( n: int )
-    // Put requires and ensures clauses here that
-    // ensure that the formula to prove is true.
-    decreases n;
-    requires n >= 0;
-    ensures SumOdds(n) == n*n;
-    ensures SumOdds(n) == SumOdds(n-1) + 2*n-1;
-{
-    // Put a body here that suffices to convince
-    // Dafny that the lemma is true.
 
-    if n == 0 { return; }
-    ProveSumOdds(n-1);
-
-
-}
 
 method ComputeSumOddsLoop( n: int ) returns (s: int)
     requires n >= 0;
@@ -87,13 +72,15 @@ method ComputeSumOddsRecursive( n: int ) returns (s: int)
     
 }
 
-// If SumOdds is correct then this lemma will work.
-lemma SumOddsAll()
-    ensures forall n | n >= 0 :: SumOdds(n) == n*n;
+
+method Main()
 {
-    forall n | n >= 0 
-    {
-        ProveSumOdds(n);
-    }
+    var loop := ComputeSumOddsLoop(10);
+    var rec := ComputeSumOddsRecursive(10);
+
+    print loop;
+    print rec;
 }
+
+
 

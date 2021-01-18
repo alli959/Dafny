@@ -61,39 +61,40 @@ method SearchLoop( a: seq<int>, i: int, j: int, x: int ) returns (k: int)
     // In this function recursion is not allowed
     // and it is not allowed to call the function
     // SearchRecursive above.
-    
-    k := -1;
+   
     var r := j;
+    while r >= i
 
-        while r != i
-            decreases r;
-            invariant 0 <= i <= j <= |a|;
-            invariant i <= k < j || k == -1;
-            invariant k != -1 ==> a[k] == x;
-            invariant k != -1 ==> k < r <= j;
-            invariant k == -1 ==>i <= r <= j;
+        decreases r - i;
+        invariant 0 <= i <= r <= |a|;
+        invariant k != -1 ==> a[k] == x;
+        invariant r == j ==> k == -1;
+        invariant a[r] == x ==> k == r;
 
-            
-        {
-            if a[r] == x
-            {
-                k := r;
-                return;
-            }
 
-            r := r - 1;
-
-            
-        }
-
-          
+    {
+       if r == i
+       {
+           k := -1;
+           return;
+       }
+       if a[r-1] == x
+       {
+           k := r-1;
+           return;
+       }
+       else
+       {
+           r := r - 1;
+       }
+   }
 
 }
 
 
 method Main() {
     var a := [1,2,3,4];
-    var x := SearchRecursive(a,1,2,3);
+    var x := SearchLoop(a,1,2,3);
     print x;
 
 }
