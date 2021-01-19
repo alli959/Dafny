@@ -1,8 +1,8 @@
 // Author of question: Snorri Agnarsson
 // Permalink of question: https://rise4fun.com/Dafny/0HRr
 
-// Author of solution:    ...
-// Permalink of solution: https://rise4fun.com/Dafny/?????
+// Author of solution:    Alexander Guðmundsson
+// Permalink of solution: https://rise4fun.com/Dafny/8pxWd
 
 // Use the command
 //   dafny LinearSearch-skeleton.dfy
@@ -15,6 +15,8 @@
 // the solution on the Dafny web page,
 // generate a permalink and put it in
 // this file.
+
+
 
 method SearchRecursive( a: seq<int>, i: int, j: int, x: int ) returns (k: int)
     decreases j-i;
@@ -49,6 +51,10 @@ method SearchRecursive( a: seq<int>, i: int, j: int, x: int ) returns (k: int)
     }
 }
 
+
+
+
+
 method SearchLoop( a: seq<int>, i: int, j: int, x: int ) returns (k: int)
     requires 0 <= i <= j <= |a|;
     ensures i <= k < j || k == -1;
@@ -62,45 +68,38 @@ method SearchLoop( a: seq<int>, i: int, j: int, x: int ) returns (k: int)
     // and it is not allowed to call the function
     // SearchRecursive above.
     
-    var r := i;
-    k := -1;
-    while r <= j
-        decreases j-r;
-        invariant i <= k < j || k == -1;
-        invariant k != -1 ==> a[k] == x;  
-        invariant 0 <= r <= j <= |a|;
-        invariant k == r ==> r != j
-        invariant k == -1 ==> forall t | i <= t < j :: a[t] != x;
-    
-
+    if i == j
     {
-        if r == j 
-        {
-            if k != -1
-            {
-                break;
-            }
-            else
-            {
-                k := -1;
-                break;
-            }
-        }
-        
-        if a[r] == x 
-        {
-            k := r;
-        }
-        r := r + 1;
+        return -1;
     }
 
+    var t := j;
+    while t > i && a[t-1] != x
+        decreases t;
+
+       
+
+    {
+        if a[t-1] == x
+        {
+            k := t-1;
+            return;
+        }
+        else 
+        {
+            t := t - 1;
+
+        }
+        
+    
+    }
+    
+    k := -1;
+
+
+
+    
     
 }
 
 
-method Main() {
-    var a := [1,2,3,4];
-    var x := SearchLoop(a,1,2,3);
-    print x;
-
-}
