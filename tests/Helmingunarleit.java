@@ -57,5 +57,19 @@ public class Helmingunarleit
         }
         return p;
     }
+
+    public static void main(String[] args){
+
+        int[] a = {0,1,2,3,4,5,6,7,8,9}; 
+        int i = 0;
+        int j = a.length;
+        int rec = searchRec(a,i,j,5);
+        int loop = searchLoop(a,i,j,5);
+
+        System.out.println(rec);
+        System.out.println(loop);
+
+
+
+    }
 }
-    
