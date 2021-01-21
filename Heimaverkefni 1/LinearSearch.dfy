@@ -74,9 +74,9 @@ method SearchLoop( a: seq<int>, i: int, j: int, x: int ) returns (k: int)
     }
 
     var t := j;
-    while t > i && a[t-1] != x
-        decreases t;
-
+    var y := i;
+    while t > y && a[t-1] != x
+        decreases t-y;
        
 
     {
