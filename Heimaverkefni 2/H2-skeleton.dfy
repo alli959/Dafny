@@ -17,11 +17,23 @@
 // this file.
 
 method SearchRecursive( a: seq<real>, i: int, j: int, x: real ) returns ( k: int )
-    decreases ???
-    requires ???
-    ensures ???
+    decreases j-i;
+    requires 0 <= i <= j <= |a|;
+    ensures i <= k <= j;
 {
-    ???
+    if i == j
+    {
+        return i;
+    }
+    var m := i + (j-i)/2;
+    if a[m] <= x
+    {
+        return SearchRecursive(a,i,m,x);
+    }
+    else
+    {
+        return SearchRecursive(a,m+1,j,x);
+    }
 }
 
 method SearchLoop( a: seq<real>, i: int, j: int, x: real ) returns ( k: int )
