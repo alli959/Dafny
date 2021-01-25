@@ -31,16 +31,20 @@ public class Binarysearchdec {
     static int searchLoop( double[] a, int i, int j, double x )
     {
         int p = i;
-        int q = j;
+        int q = j-1;
         while( p != q )
         // Loop invariant:
             //    ?I?
             {
                 int m = i + ( j-i )/2;
-                if( a[m] > x )
-                p = m+1;
-                else
-                q = m-1;
+                if( a[m] > x ) {
+
+                    p = m+1;
+                }
+                else {
+
+                    q = m-1;
+                }
             }
         return p;
     }
