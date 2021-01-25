@@ -25,18 +25,18 @@ method SearchRecursive( a: seq<real>, i: int, j: int, x: real ) returns ( k: int
     {
         return i;
     }
-    var m := i + (j-i)/2;
+    var m := i +(j-i)/2;
     if a[m] <= x
     {
-        return SearchRecursive(a,i,m,x);
+        k := SearchRecursive(a,i,m,x);
     }
     else
     {
-        return SearchRecursive(a,m+1,j,x);
+        k := SearchRecursive(a,m+1,j,x);
     }
 }
 
-method SearchLoop( a: seq<real>, i: int, j: int, x: real ) returns ( k: int )
+/*method SearchLoop( a: seq<real>, i: int, j: int, x: real ) returns ( k: int )
     requires ???
     ensures ???
 {
@@ -49,17 +49,27 @@ method SearchLoop( a: seq<real>, i: int, j: int, x: real ) returns ( k: int )
         ???
     }
     return ???;
-}
+}*/
 
 // Ef eftirfarandi fall er ekki samþykkt þá eru
 // föllin ekki að haga sér rétt að mati Dafny.
 method Test( a: seq<real>, x: real )
     requires forall p,q | 0 <= p < q < |a| :: a[p] >= a[q];
 {
+    /*
     var k1 := SearchLoop(a,0,|a|,x);
     assert forall r | 0 <= r < k1 :: a[r] >= x;
-    assert forall r | k1 <= r < |a| :: a[r] < x;
+    assert forall r | k1 <= r < |a| :: a[r] < x;*/
     var k2 := SearchRecursive(a,0,|a|,x);
     assert forall r | 0 <= r < k2 :: a[r] >= x;
     assert forall r | k2 <= r < |a| :: a[r] < x;
+}
+
+
+
+method Main()
+{
+  var a := [10.0, 8.0, 6.0, 4.0, 2.0, 0.0];
+  var k := SearchRecursive(a, 0, |a|, 5.0);
+  print k;
 }
