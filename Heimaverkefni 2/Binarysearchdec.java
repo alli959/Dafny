@@ -13,7 +13,7 @@ public class Binarysearchdec {
             return i;
         } 
         int m = i + (j-i)/2;
-        if( a[m] <= x ) {
+        if( a[m] < x ) {
 
             return searchRecursive(a,i,m,x);
         }
@@ -31,19 +31,19 @@ public class Binarysearchdec {
     static int searchLoop( double[] a, int i, int j, double x )
     {
         int p = i;
-        int q = j-1;
+        int q = j;
         while( p != q )
         // Loop invariant:
             //    ?I?
             {
-                int m = i + ( j-i )/2;
-                if( a[m] > x ) {
+                int m = p + ( q-p )/2;
+                if( a[m] >= x ) {
 
                     p = m+1;
                 }
                 else {
 
-                    q = m-1;
+                    q = m;
                 }
             }
         return p;
@@ -51,22 +51,10 @@ public class Binarysearchdec {
 
 
     public static void main(String[] args){
-        double[] a = {9,8,4,3,2,1,-1,-14};
-        System.out.println(searchRecursive(a,0,a.length,9));
-        System.out.println(searchLoop(a,0,a.length,9));
-        System.out.println(searchRecursive(a,0,a.length,8));
+        double[] a = {9,8,4,3,2,1,-1};
+        System.out.println(searchLoop(a,0,a.length,0));
+        System.out.println(searchRecursive(a,0,a.length,0));
         System.out.println(searchLoop(a,0,a.length,8));
-        System.out.println(searchRecursive(a,0,a.length,5));
-        System.out.println(searchLoop(a,0,a.length,5));
-        System.out.println(searchRecursive(a,0,a.length,4));
-        System.out.println(searchLoop(a,0,a.length,4));
-        System.out.println(searchRecursive(a,0,a.length,3));
-        System.out.println(searchLoop(a,0,a.length,3));
-        System.out.println(searchRecursive(a,0,a.length,2));
-        System.out.println(searchLoop(a,0,a.length,2));
-        System.out.println(searchRecursive(a,0,a.length,1));
-        System.out.println(searchLoop(a,0,a.length,1));
-        System.out.println(searchRecursive(a,0,a.length,-1));
-        System.out.println(searchLoop(a,0,a.length,-14));
+        System.out.println(searchRecursive(a,0,a.length,8));
     }
 }
