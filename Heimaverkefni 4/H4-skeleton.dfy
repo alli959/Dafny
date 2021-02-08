@@ -1,7 +1,7 @@
 // Höfundur spurningar:  Snorri Agnarsson, snorri@hi.is
 // Permalink spurningar: https://rise4fun.com/Dafny/BnuhE
 
-// Höfundur lausnar:     ...
+// Höfundur lausnar:     Alexander Guðmundsson
 // Permalink lausnar:    ...
 
 ///////////////////////////////////////////////////////////////
@@ -236,25 +236,29 @@ method Split( a: multiset<int> )
                 )
     // Tilgreinið viðeigandi eftirskilyrði
     // fyrir þetta fall.
-    ensures ...
 {
+    b := multiset{};
+    c := multiset{};
     // Forritið stofn fyrir þetta fall.
     // Þið getið notað lykkju eða endurkvæmni.
     // Sé endurkvæmni notuð þarf e.t.v. að bæta
     // við 'decreases' klausu í haus fallsins.
     //
     // Fallið RemoveTwo er gagnlegt hér.
-    ...
+    var d,e,f := RemoveTwo(a);
+    b := b + multiset{e};
+    c := c + multiset{f};
+
 }
 
 // Raðar innihaldi poka yfir í runu með mergesort.
 method Sort( a: multiset<int> ) returns ( b: seq<int> )
     // Tilgreinið viðeigandi 'decreases' og 'ensures'
     // klausur.
-    decreases ...
+    decreases a;
     ensures ...
 {
     // Forritið stofn fyrir þetta fall.
     // Eðlilegt er að nota endurkvæmni hér.
-    ...
+    var 
 }
