@@ -2,7 +2,7 @@
 // Permalink spurningar: https://rise4fun.com/Dafny/vkxp
 
 // Höfundur lausnar:     Alexander Guðmundsson
-// Permalink lausnar:    ...
+// Permalink lausnar:    https://rise4fun.com/Dafny/HLplX
 
 ///////////////////////////////////////////////////////////////
 // Hér byrjar óbreytanlegi hluti skrárinnar.
@@ -124,7 +124,7 @@ method Partition( a: multiset<int> ) returns ( b: multiset<int>, p: int, c: mult
     // Þið munið vilja nota lykkju.
     // Hjálparfallið RemoveOne verður væntanlega gagnlegt.
     var rest := a;
-    p := rest[0];
+    p :| p in rest;
     rest := rest - multiset{p};
     b := multiset{};
     c := multiset{};
@@ -134,21 +134,21 @@ method Partition( a: multiset<int> ) returns ( b: multiset<int>, p: int, c: mult
         invariant forall z | z in b :: z<=p;
         invariant forall z | z in c :: z>=p;
     {
-        
-        if rest[0] <= p 
+        var z :| z in rest;
+        if z <= p 
         {
-            b := b+multiset{rest[0]}; 
+            b := b+multiset{z};
         }
         else 
         { 
-            c := c+multiset{rest[0]}; 
+            c := c+multiset{z}; 
         }
-        rest := rest - multiset{rest[0]};
+        rest := rest - multiset{z};
     }
 }
 
 method Sort( m: multiset<int> ) returns ( r: seq<int> )
-    decreases |m|;
+    decreases m;
     ensures m == multiset(r);
     ensures IsSorted(r);
 {
@@ -158,5 +158,17 @@ method Sort( m: multiset<int> ) returns ( r: seq<int> )
     // verður væntanlega gagnleg.
     // Hugsanlega viljið þið einnig
     // nota hjálparsetninguna Singleton.
+    if |m| == 0
+    {
+        return [];
+    }
+    var b,p,c := Partition(m);
+    var b' := Sort(b);
+    var c' := Sort(c);
+    r :=  b'+[p]+c';
+    LomutoLemma(b,b',p,c,c',r);
+
+
+
     
 }
