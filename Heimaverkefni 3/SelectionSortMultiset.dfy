@@ -1,8 +1,8 @@
 // Höfundur spurningar:  Snorri Agnarsson, snorri@hi.is
 // Permalink spurningar: https://rise4fun.com/Dafny/dtcnY
 
-// Höfundur lausnar:     ...
-// Permalink lausnar:    ...
+// Höfundur lausnar:     Alexander Guðmundsson
+// Permalink lausnar:    https://rise4fun.com/Dafny/ybUCz
 
 ///////////////////////////////////////////////////////////////
 // Hér byrjar óbreytanlegi hluti skrárinnar.
@@ -58,11 +58,14 @@ method Main()
 // Klárið að forrita þetta fall.
 method Sort( m: multiset<int> ) returns ( s: seq<int> )
     // Setjið viðeigandi ensures klausur hér
-    ...
+    ensures multiset(s) == m;
+    ensures forall p,q | 0 <= p < q < |s| :: s[p] <= s[q];
 {
     // Setjið viðeigandi frumstillingar á m' og s hér.
     // m' er ný staðvær breyta en s er skilabreyta.
-    ...
+    s := [];
+    var m' := m;
+
     while m' != multiset{}
         // Ekki breyta fastayrðingu lykkju
         decreases m';
@@ -71,6 +74,9 @@ method Sort( m: multiset<int> ) returns ( s: seq<int> )
         invariant forall z | z in m' :: forall r | 0 <= r < |s| :: z >= s[r];
     {
         // Setjið viðeigandi stofn í lykkjuna hér
-        ...
+        var x := MinOfMultiset(m');
+        m' := m' - multiset{x};
+        s := s + [x];
     }
+    return s;
 }

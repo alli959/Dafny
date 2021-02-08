@@ -1,7 +1,7 @@
 // Höfundur spurningar:  Snorri Agnarsson, snorri@hi.is
 // Permalink spurningar: https://rise4fun.com/Dafny/vkxp
 
-// Höfundur lausnar:     ...
+// Höfundur lausnar:     Alexander Guðmundsson
 // Permalink lausnar:    ...
 
 ///////////////////////////////////////////////////////////////
@@ -113,15 +113,44 @@ method Main()
 
 method Partition( a: multiset<int> ) returns ( b: multiset<int>, p: int, c: multiset<int> )
     // Bætið við requires/ensures eftir þörfum
+    requires |a| >= 1;
+    ensures a == b+multiset{p}+c;
+    ensures forall z | z in b :: z <= p;
+    ensures forall z | z in c :: z >= p;
+    ensures |b|==|b|<|a|;
+    ensures |c|<|a|;
 {
     // Forritið stofn fallsins.
     // Þið munið vilja nota lykkju.
     // Hjálparfallið RemoveOne verður væntanlega gagnlegt.
-    ...
+    var rest := a;
+    p := rest[0];
+    rest := rest - multiset{p};
+    b := multiset{};
+    c := multiset{};
+    while rest != multiset{}
+        decreases |rest|;
+        invariant a == rest+b+multiset{p}+c;
+        invariant forall z | z in b :: z<=p;
+        invariant forall z | z in c :: z>=p;
+    {
+        
+        if rest[0] <= p 
+        {
+            b := b+multiset{rest[0]}; 
+        }
+        else 
+        { 
+            c := c+multiset{rest[0]}; 
+        }
+        rest := rest - multiset{rest[0]};
+    }
 }
 
 method Sort( m: multiset<int> ) returns ( r: seq<int> )
-    // Bætið við requires/ensures/decreases eftir þörfum
+    decreases |m|;
+    ensures m == multiset(r);
+    ensures IsSorted(r);
 {
     // Forritið stofn fallsins.
     // Þið munið vilja nota endurkvæmni.
@@ -129,5 +158,5 @@ method Sort( m: multiset<int> ) returns ( r: seq<int> )
     // verður væntanlega gagnleg.
     // Hugsanlega viljið þið einnig
     // nota hjálparsetninguna Singleton.
-    ...
+    
 }
