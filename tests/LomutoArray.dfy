@@ -1,3 +1,4 @@
+
 // IsComparator(c) er satt þá og því aðeins að sannað
 // sé að c sé nothæft sem samanburðarfall.
 predicate IsComparator<T(!new)>( c: (T,T)->int )

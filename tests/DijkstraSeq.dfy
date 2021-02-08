@@ -1,3 +1,4 @@
+
 // Quicksort fyrir seq<int>.
 
 // Höfundur:  Snorri Agnarsson, snorri@hi.is

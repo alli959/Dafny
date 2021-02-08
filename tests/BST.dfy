@@ -1,8 +1,9 @@
+
 // Author: Snorri Agnarsson, snorri@hi.is
 
 datatype BST = BSTEmpty | BSTNode(BST,int,BST)
 
-function method TreeSeq( t: BST ): seq<int>
+function TreeSeq( t: BST ): seq<int>
     decreases t;
 {
     match t
@@ -1084,18 +1085,3 @@ method DeleteMin( t: BST ) returns ( newt: BST, min: int )
     assert min == TreeSeq(Left(t))[0];
     newt := BSTNode(newt,RootValue(t),Right(t));
 }
-
-lemma RecursionSearchLemma()
-    ensures forall t: BST, p: seq<dir> |
-        IsTreePath(t,p) && p != [] && p[0]==0 && Subtree(t,p) != BSTEmpty ::
-        PreSeqExcluding(t,p) == PreSeqExcluding(Left(t),p[1..]) &&
-        PreSeqIncluding(t,p) == PreSeqIncluding(Left(t),p[1..]) &&
-        PostSeqExcluding(t,p) == PostSeqExcluding(Left(t),p[1..])+[RootValue(t)]+TreeSeq(Right(t)) &&
-        PostSeqIncluding(t,p) == PostSeqIncluding(Left(t),p[1..])+[RootValue(t)]+TreeSeq(Right(t));
-    ensures forall t: BST, p: seq<dir> |
-        IsTreePath(t,p) && p != [] && p[0]==1 && Subtree(t,p) != BSTEmpty ::
-        PostSeqExcluding(t,p) == PostSeqExcluding(Right(t),p[1..]) &&
-        PostSeqIncluding(t,p) == PostSeqIncluding(Right(t),p[1..]) &&
-        PreSeqExcluding(t,p) == TreeSeq(Left(t))+[RootValue(t)]+PreSeqExcluding(Right(t),p[1..]) &&
-        PreSeqIncluding(t,p) == TreeSeq(Left(t))+[RootValue(t)]+PreSeqIncluding(Right(t),p[1..]);
-{}
