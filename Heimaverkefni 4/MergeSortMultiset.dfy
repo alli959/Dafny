@@ -2,7 +2,7 @@
 // Permalink spurningar: https://rise4fun.com/Dafny/BnuhE
 
 // Höfundur lausnar:     Alexander Guðmundsson
-// Permalink lausnar:    ...
+// Permalink lausnar:    https://rise4fun.com/Dafny/slSbJ
 
 ///////////////////////////////////////////////////////////////
 // Hér byrjar óbreytanlegi hluti skrárinnar.
@@ -191,6 +191,7 @@ method Main()
 
 // Þið munuð vilja nota þetta samröðunarfall í Sort fallinu.
 method Merge( a: seq<int>, b: seq<int> ) returns( c: seq<int> )
+    decreases a,b;
     requires IsSorted(a);
     requires IsSorted(b);
     ensures IsSorted(c);
@@ -217,7 +218,26 @@ method Merge( a: seq<int>, b: seq<int> ) returns( c: seq<int> )
     // Dafny geti sannreynt það ástand sem
     // búið er að skapa.
 
-    ...
+    if a == []
+    {
+        return b;
+    }
+    
+    if b == []
+    {
+        return a;
+    }
+    if a[0] > b[0]
+    {
+        c := Merge(a,b[1..]);
+        c := b[0..1]+c;
+    }
+    else
+    {
+        c := Merge(a[1..],b);
+        c := a[0..1]+c;
+    }
+
     
     // Ráðlegt er að láta þessi tvö köll á
     // hjálparsetningar vera það síðasta sem gerist
@@ -234,11 +254,22 @@ method Split( a: multiset<int> )
         returns ( b: multiset<int>
                 , c: multiset<int>
                 )
+    decreases a;
+    ensures |b|==|c| || |b|==|c|+1;
     // Tilgreinið viðeigandi eftirskilyrði
     // fyrir þetta fall.
 {
-    b := multiset{};
-    c := multiset{};
+    if |a| == 1
+    {
+        var x :| x in a;
+        b := b + multiset{x};
+        return b,c;
+    }
+    if |a| == 0
+    {
+        return b,c;
+    }
+    
     // Forritið stofn fyrir þetta fall.
     // Þið getið notað lykkju eða endurkvæmni.
     // Sé endurkvæmni notuð þarf e.t.v. að bæta
@@ -248,6 +279,7 @@ method Split( a: multiset<int> )
     var d,e,f := RemoveTwo(a);
     b := b + multiset{e};
     c := c + multiset{f};
+    b,c := Split(d);
 
 }
 
@@ -256,9 +288,28 @@ method Sort( a: multiset<int> ) returns ( b: seq<int> )
     // Tilgreinið viðeigandi 'decreases' og 'ensures'
     // klausur.
     decreases a;
-    ensures ...
+    ensures IsSorted(b);
+    ensures a == multiset(b);
 {
     // Forritið stofn fyrir þetta fall.
     // Eðlilegt er að nota endurkvæmni hér.
-    var 
+    if |a| == 1
+    {
+        var x :| x in a;
+        return [x];
+    }
+    var e,f := Split(a);
+    if |c| < 2
+    {
+        var i :| i in c;
+        var j :| j in d;
+        b := Merge([i],[j]);    
+    }
+    else 
+    {
+        b := Sort(c);
+        b := Sort(d);
+    }
+    
+    
 }
