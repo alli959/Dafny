@@ -14,10 +14,38 @@ method Partition( m: multiset<int> )
     ensures forall z | z in pre :: z <= p;
     ensures forall z | z in post :: z >= p;
 {
-    x :| x in m
+    p :| p in m;
+    var m' := m;
+    m' := m' - multiset{p};
+    pre := multiset{};
+    post := multiset{};
+    while m' != multiset{}
+        decreases m';
+        invariant m == m' + pre + multiset{p} + post;
+        invariant forall k | k in pre :: k <= p;
+        invariant forall k | k in post :: k >= p;
 
-
+    {
+        var temp :| temp in m';
+        m' := m' - multiset{temp};
+        if temp <= p
+        {
+            pre := pre + multiset{temp};
+        }
+        else
+        {
+            post := post + multiset{temp};
+        }
+    }
+    return pre,p,post;
+        
 }
+
+    
+
+
+
+
 
 method QuickSelect( m: multiset<int>, k: int )
         returns( pre: multiset<int>, kth: int, post: multiset<int> )
@@ -29,20 +57,21 @@ method QuickSelect( m: multiset<int>, k: int )
     ensures forall z | z in post :: z >= kth;
 {
     
-    //var pre := multiset{};
-    //var post := multiset{};
-    if k > 0 && k <= |m|
+    
+    pre,kth,post := Partition(m);
+    var length := kth - |pre| + 1;
+    if length == k
     {
-        var pre,p,post = Partition(m);
-
-        if p - 1 == k-1
-        {
-            return pre,p-1,post;
-        }
-
-        if(p-1 > k-1)
-        {
-            return QuickSelect(m,)
-        }
+        return pre,kth,post;
     }
+    else if k < length
+    {
+        pre,kth,post := QuickSelect(pre,k);
+    }
+    else
+    {
+        pre,kth,post := QuickSelect(post, k-length);
+    }
+    
+    
 }
