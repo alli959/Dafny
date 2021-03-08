@@ -58,20 +58,41 @@ method QuickSelect( m: multiset<int>, k: int )
 {
     
     
-    pre,kth,post := Partition(m);
-    var length := kth - |pre| + 1;
-    if length == k
+    var m' := m;
+
+    pre := multiset{};
+    kth := 0;
+    post := multiset{};
+    while m' != multiset{}
+    
+        requires 0 <= k <= |m'| < |m|
+    
     {
-        return pre,kth,post;
+
+        var pr,kt,po := Partition(m');
+
+        if k == kt
+        {
+            pre := pre + pr;
+            post := post + po;
+            kth := kt;
+            break;
+        }
+        else if k < kth
+        {
+            post := post + po;
+            m' := m' - post;
+        }
+        else
+        {
+            pre := pre + pr;
+            m' := m' - pre;
+        }
+
     }
-    else if k < length
-    {
-        pre,kth,post := QuickSelect(pre,k);
-    }
-    else
-    {
-        pre,kth,post := QuickSelect(post, k-length);
-    }
+
+    return pre,kth,post;
+    
     
     
 }
