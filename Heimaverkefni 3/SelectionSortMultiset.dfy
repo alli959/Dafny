@@ -42,7 +42,6 @@ method Test( m: multiset<int> )
 method Main()
 {
     var m := multiset{0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9};
-    print(m);
     var s := Sort(m);
     assert multiset(s) == m;
     assert forall p,q | 0 <= p < q < |s| :: s[p] <= s[q];

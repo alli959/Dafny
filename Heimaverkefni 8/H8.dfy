@@ -2,7 +2,7 @@
 // Permalink spurningar: https://rise4fun.com/Dafny/GW7a
 
 // Höfundur lausnar:     Alexander Guðmundsson
-// Permalink lausnar:    ...
+// Permalink lausnar:    https://www.rise4fun.com/Dafny/JPGct
 
 // Klárið að forrita föllin tvö.
 
@@ -49,6 +49,7 @@ method Partition( m: multiset<int> )
 
 method QuickSelect( m: multiset<int>, k: int )
         returns( pre: multiset<int>, kth: int, post: multiset<int> )
+    decreases m;
     requires 0 <= k < |m|;
     ensures kth in m;
     ensures m == pre+multiset{kth}+post;
@@ -56,43 +57,30 @@ method QuickSelect( m: multiset<int>, k: int )
     ensures forall z | z in pre :: z <= kth;
     ensures forall z | z in post :: z >= kth;
 {
-    
-    
-    var m' := m;
-
-    pre := multiset{};
-    kth := 0;
-    post := multiset{};
-    while m' != multiset{}
-    
-        requires 0 <= k <= |m'| < |m|
-    
+    pre,kth,post := Partition(m);
+    assert m == pre + multiset{kth} + post;
+    if |pre| != k
     {
-
-        var pr,kt,po := Partition(m');
-
-        if k == kt
+        if k > |pre|
         {
-            pre := pre + pr;
-            post := post + po;
-            kth := kt;
-            break;
-        }
-        else if k < kth
-        {
-            post := post + po;
-            m' := m' - post;
-        }
-        else
-        {
-            pre := pre + pr;
-            m' := m' - pre;
-        }
+        
+            var pre',p,post' := QuickSelect(post,k-|pre| - 1);
+            assert pre' + multiset{p} + post' == post;
+            pre := pre + multiset{kth} + pre';
+            post := post - pre' - multiset{p};
+            kth := p;
 
+        }
+        else if k < |pre|
+        {
+            var pre',p,post' := QuickSelect(pre,k);
+            pre := pre - multiset{p} - post';
+            post := post + multiset{kth} + post';
+            kth := p;
+
+        }
     }
-
-    return pre,kth,post;
-    
-    
-    
+    else{
+        return pre,kth,post;
+    } 
 }
