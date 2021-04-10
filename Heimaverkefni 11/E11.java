@@ -1,7 +1,11 @@
 // Klasinn E11 notar klasann Link sem er í Link.java.
 // Lesið skilgreiningarnar og setningarnar þar.
 public class E11
-{    
+
+
+{
+
+
     // Notkun: splice(x,i,y);
     // Fyrir:  x er lögleg keðja með N hlekki og hlekkjarunu
     //           [x_0,...,x_{N-1}].
@@ -15,16 +19,34 @@ public class E11
     //         með i+1 hlekki fyrir framan úr gömlu x rununni.
     //         Takið eftir að leyfilegt er að y sé tóm runa.
     //         Takið eftir að engir nýjir hlekkir verða til.
-   /* public static<E> void splice( Link<E> x, int i, Link<E> y )
+    public static<E> void splice( Link<E> x, int i, Link<E> y )
     {
-        if(y.length == 0){
-            System.out.println("here");
+        if(y == null) {
+            return;
+        }
+        
+        Link<E> rev = new Link<E>();
+        Link<E> returner = new Link<E>();
+        returner.head = x.head;
+        Link<E> newX = x;
+        int counter = 0;
+        while(newX != null) {
+            Link<E> temp = new Link<E>();
+            temp.head = newX.head;
+            temp.tail = returner;
+            
 
         }
-        // Hér vantar forritstexta með tveimur lykkjum
-        // og viðeigandi fastayrðingum. Munið að meðhöndla
-        // tilvikið þegar y er tóm keðja.
-    }*/
+        while(newX != null){
+            
+            rev.head = newX.head;
+            rev.tail = newX;
+            newX = newX.tail;
+        }
+        x = rev;
+
+
+    }
     
     // Notkun: Link<E> x = makeChainLoop(a);
     // Fyrir:  a er E[], ekki null.
@@ -40,7 +62,12 @@ public class E11
         x.head = a[j];
         x.tail = null;
         j--;
-        while(j >= 0) {
+        while(j >= 0)
+        // x er keðja nýrra hlekkja sem innihalda a[i..a.length),
+        // í þeirri röð
+        // 0 <= j <= a.length
+
+        {
             Link<E> temp = new Link<E>();
             temp.head = a[j];
             temp.tail = x;
@@ -57,18 +84,20 @@ public class E11
     // Eftir:  x er lögleg keðja með N=j-i hlekki og
     //         hlekkjarunu nýrra hlekkja [h_0,...,h_{N-1}] þannig
     //         að h_I.head == a[I-i] fyrir I=0,...,N-1.
-    /*public static<E> Link<E> makeChainRecursive( E[] a, int i, int j )
+    public static<E> Link<E> makeChainRecursive( E[] a, int i, int j )
     {
-        if(i > 0) {
+        Link<E> x = new Link<E>();
+        x.head = a[i];
+        if(i == j-1) {
             return x;
         }
-        Link<E> x = new Link<E>(a[j],null);
-        Link<E> y = new Link<E>(a[i],x);
+
+        x.tail = makeChainRecursive(a,i+1,j);
         
+        return x;
 
         
-        
-    }*/
+    }
     
     // Prófið að keyra þessa skipun:
     //  java E11 1 2 3 4 5 6
@@ -77,19 +106,15 @@ public class E11
     public static void main( String[] args )
     {
         Link<String> x = makeChainLoop(args);
-        //=======temp
-        while(x != null) {
-            System.out.println(x.head+" ");
-            x = x.tail;
-        }
-        //===========
-        /*Link<String> y = makeChainRecursive(args,0,args.length);
+
+        Link<String> y = makeChainRecursive(args,0,args.length);
         splice(x,3,y);
         splice(x,0,null);
+    
         while( x != null )
         {
             System.out.print(x.head+" ");
             x = x.tail;
-        }*/
+        }
     }
 }

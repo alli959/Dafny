@@ -1,38 +1,38 @@
-// Tilvik af H11<T> eru forgangsbiğrağir hluta af tagi T.
-// Tilvik af H11<T> er ağeins hægt ağ búa til fyrir klasa T
-// sem eru Comparable, ş.e. tilvik af T eru samanburğarhæf hvort
-// viğ annağ, meğ şeim samningi sem şví fylgir.
+// Tilvik af H11<T> eru forgangsbiÃ°raÃ°ir hluta af tagi T.
+// Tilvik af H11<T> er aÃ°eins hÃ¦gt aÃ° bÃºa til fyrir klasa T
+// sem eru Comparable, Ã¾.e. tilvik af T eru samanburÃ°arhÃ¦f hvort
+// viÃ° annaÃ°, meÃ° Ã¾eim samningi sem Ã¾vÃ­ fylgir.
 
-// Skilgreiningar (şetta má skilgreina formlega í Dafny):
+// Skilgreiningar (Ã¾etta mÃ¡ skilgreina formlega Ã­ Dafny):
 //
-//   Í fylki a sem inniheldur sæti i segjum viğ ağ sæti 2*i+1 og
-//   2*i+2 séu börn sætis i, ef şau eru til stağar í fylkinu.
-//   Á svipağan hátt segjum viğ ağ fyrir sæti i > 0 sé sæti
-//   floor((i-1)/2) foreldri sætis i.
+//   Ã fylki a sem inniheldur sÃ¦ti i segjum viÃ° aÃ° sÃ¦ti 2*i+1 og
+//   2*i+2 sÃ©u bÃ¶rn sÃ¦tis i, ef Ã¾au eru til staÃ°ar Ã­ fylkinu.
+//   Ã svipaÃ°an hÃ¡tt segjum viÃ° aÃ° fyrir sÃ¦ti i > 0 sÃ© sÃ¦ti
+//   floor((i-1)/2) foreldri sÃ¦tis i.
 //
-//   Viğ skilgreinum ağ sæti 2*i+1 og 2*i+2 séu afkomendur sætis
-//   i og viğ skilgreinum einnig ağ ef sæti k er afkomandi j og
-//   j er afkomandi i şá er k afkomandi i (gegnvirkni, transitivity).
+//   ViÃ° skilgreinum aÃ° sÃ¦ti 2*i+1 og 2*i+2 sÃ©u afkomendur sÃ¦tis
+//   i og viÃ° skilgreinum einnig aÃ° ef sÃ¦ti k er afkomandi j og
+//   j er afkomandi i Ã¾Ã¡ er k afkomandi i (gegnvirkni, transitivity).
 //
-//   Fyrir svæği a[i..j) í fylki samanburğarhæfra gilda segjum viğ
-//   ağ svæğiğ uppfylli hrúguskilyrği şá og şví ağeins ağ fyrir
-//   sérhver tvö sæti n og m innan svæğisins, şar sem m er afkomandi
-//   n gildi ağ bæği a[m] og a[n] eru lögleg gildi (ekki null, til
-//   dæmis) og a[m] <= a[n], ş.e. a[m].compareTo(a[n]) <= 0.
+//   Fyrir svÃ¦Ã°i a[i..j) Ã­ fylki samanburÃ°arhÃ¦fra gilda segjum viÃ°
+//   aÃ° svÃ¦Ã°iÃ° uppfylli hrÃºguskilyrÃ°i Ã¾Ã¡ og Ã¾vÃ­ aÃ°eins aÃ° fyrir
+//   sÃ©rhver tvÃ¶ sÃ¦ti n og m innan svÃ¦Ã°isins, Ã¾ar sem m er afkomandi
+//   n gildi aÃ° bÃ¦Ã°i a[m] og a[n] eru lÃ¶gleg gildi (ekki null, til
+//   dÃ¦mis) og a[m] <= a[n], Ã¾.e. a[m].compareTo(a[n]) <= 0.
 //
-//   Viğ segjum einnig ağ svæği a[0..j) sé hrúga ef svæğiğ
-//   uppfyllir hrúguskilyrği.
+//   ViÃ° segjum einnig aÃ° svÃ¦Ã°i a[0..j) sÃ© hrÃºga ef svÃ¦Ã°iÃ°
+//   uppfyllir hrÃºguskilyrÃ°i.
 //
-//   Setning: Ef a[i..j) er svæği í fylki og j < 2*i+1 şá uppfyllir
-//   svæğiğ hrúguskilyrği şví ekkert sæti innan svæğisins er
-//   afkomandi annars sætis innan svæğisins. Jafngilt skilyrği er
-//   şegar i > floor((j-1)/2) eğa şegar i >= floor((j-1)/2)+1.
+//   Setning: Ef a[i..j) er svÃ¦Ã°i Ã­ fylki og j < 2*i+1 Ã¾Ã¡ uppfyllir
+//   svÃ¦Ã°iÃ° hrÃºguskilyrÃ°i Ã¾vÃ­ ekkert sÃ¦ti innan svÃ¦Ã°isins er
+//   afkomandi annars sÃ¦tis innan svÃ¦Ã°isins. Jafngilt skilyrÃ°i er
+//   Ã¾egar i > floor((j-1)/2) eÃ°a Ã¾egar i >= floor((j-1)/2)+1.
 //
-//   Setning (sannanleg í Dafny): Ef a[0..j) er hrúga şá er a[0]
-//   stærsta gildiğ í svæğinu (ef j != 0, ağ sjálfsögğu).
+//   Setning (sannanleg Ã­ Dafny): Ef a[0..j) er hrÃºga Ã¾Ã¡ er a[0]
+//   stÃ¦rsta gildiÃ° Ã­ svÃ¦Ã°inu (ef j != 0, aÃ° sjÃ¡lfsÃ¶gÃ°u).
 //
-//   Takiğ eftir ağ hrúga a[0..j) er tvíundartré meğ j hnúta í
-//   eins miklu jafnvægi og hægt er ağ öğlast meğ j hnúta tré.
+//   TakiÃ° eftir aÃ° hrÃºga a[0..j) er tvÃ­undartrÃ© meÃ° j hnÃºta Ã­
+//   eins miklu jafnvÃ¦gi og hÃ¦gt er aÃ° Ã¶Ã°last meÃ° j hnÃºta trÃ©.
 
 public class H11< T extends Comparable<? super T>>
 {
@@ -40,27 +40,27 @@ public class H11< T extends Comparable<? super T>>
     private int n;
     // draugabreyta multiset<T> m;
 
-    // Fastayrğing gagna:
-    //    ...Skrifiğ stöğulısingu hér sem lısir şví hvernig
-    //    ...gildin í forgangsbiğröğinni, sem einnig eru gildin
-    //    ...í draugabreytunni m, eru geymd fremst í fylkinu a,
-    //    ...şannig ağ şau mynda hrúgu n gilda.  Muniğ ağ setja
-    //    ...skilyrği á útkomur samanburğa milli viğeigandi sæta
-    //    ...í svæğinu og setjiğ skilyrği sem tengja saman n og
-    //    ...a.length.  Reyniğ ağ sjá til şess ağ ekki şurfi mjög
-    //    ...oft ağ endurúthluta a, en sjáiğ einnig til şess ağ
-    //    ...minnissóun sé ekki óhófleg.
+    // FastayrÃ°ing gagna:
+    //    ...SkrifiÃ° stÃ¶Ã°ulÃ½singu hÃ©r sem lÃ½sir Ã¾vÃ­ hvernig
+    //    ...gildin Ã­ forgangsbiÃ°rÃ¶Ã°inni, sem einnig eru gildin
+    //    ...Ã­ draugabreytunni m, eru geymd fremst Ã­ fylkinu a,
+    //    ...Ã¾annig aÃ° Ã¾au mynda hrÃºgu n gilda.  MuniÃ° aÃ° setja
+    //    ...skilyrÃ°i Ã¡ Ãºtkomur samanburÃ°a milli viÃ°eigandi sÃ¦ta
+    //    ...Ã­ svÃ¦Ã°inu og setjiÃ° skilyrÃ°i sem tengja saman n og
+    //    ...a.length.  ReyniÃ° aÃ° sjÃ¡ til Ã¾ess aÃ° ekki Ã¾urfi mjÃ¶g
+    //    ...oft aÃ° endurÃºthluta a, en sjÃ¡iÃ° einnig til Ã¾ess aÃ°
+    //    ...minnissÃ³un sÃ© ekki Ã³hÃ³fleg.
     //
-    //    Muniğ ağ fastayrğingin er (í Java, ekki í Dafny) sjálfgefinn
-    //    hluti af eftirskilyrği allra opinberra ağgerğa, şar meğ
-    //    taliğ allra smiğa. Einnig er fastayrğingin sjálfgefinn
-    //    hluti forskilyrğis allra opinberra boğa annarra en
-    //    smiğa.
+    //    MuniÃ° aÃ° fastayrÃ°ingin er (Ã­ Java, ekki Ã­ Dafny) sjÃ¡lfgefinn
+    //    hluti af eftirskilyrÃ°i allra opinberra aÃ°gerÃ°a, Ã¾ar meÃ°
+    //    taliÃ° allra smiÃ°a. Einnig er fastayrÃ°ingin sjÃ¡lfgefinn
+    //    hluti forskilyrÃ°is allra opinberra boÃ°a annarra en
+    //    smiÃ°a.
 
     // Notkun: H11<T> pq = new H11<T>();
-    // Fyrir:  Ekkert (annağ en ağ T verğur ağ vera löglegt).
-    // Eftir:  pq er nı tóm forgangsbiğröğ gilda af tagi T
-    //         meğ pláss fyrir ótakmarkağan fjölda gilda.
+    // Fyrir:  Ekkert (annaÃ° en aÃ° T verÃ°ur aÃ° vera lÃ¶glegt).
+    // Eftir:  pq er nÃ½ tÃ³m forgangsbiÃ°rÃ¶Ã° gilda af tagi T
+    //         meÃ° plÃ¡ss fyrir Ã³takmarkaÃ°an fjÃ¶lda gilda.
     public H11()
     {
         a = (T[]) new Comparable<?>[100];
@@ -68,88 +68,120 @@ public class H11< T extends Comparable<? super T>>
     }
 
     // Notkun: rollDown(a,i,j);
-    // Fyrir:  a[i..j) og a[i+1..j) eru svæği í a.
-    //         a[i+1..j) uppfyllir hrúguskilyrği.
-    // Eftir:  a[i..j) inniheldur sömu gildi og áğur,
-    //         en şeim hefur veriğ umrağağ şannig ağ
-    //         a[i..j) uppfyllir nú hrúguskilyrği.
+    // Fyrir:  a[i..j) og a[i+1..j) eru svÃ¦Ã°i Ã­ a.
+    //         a[i+1..j) uppfyllir hrÃºguskilyrÃ°i.
+    // Eftir:  a[i..j) inniheldur sÃ¶mu gildi og Ã¡Ã°ur,
+    //         en Ã¾eim hefur veriÃ° umraÃ°aÃ° Ã¾annig aÃ°
+    //         a[i..j) uppfyllir nÃº hrÃºguskilyrÃ°i.
     public static<E extends Comparable<? super E>> void rollDown( E[] a, int i, int j )
     {
-        // Hér vantar forritstexta
-        // Hér ætti ağ vera lykkja meğ fastayrğingu sem getur veriğ
-        // eitthvağ a şessa leiğ:
-        //   ? <= k < ?
-        //   Allir samanburğir milli sæta p < q í svæğinu a[i..j)
-        //   eru í samræmi viğ hrúguskilyrği nema e.t.v. í şeim
-        //   tilvikum şegar ???.
+        // HÃ©r vantar forritstexta
+        // HÃ©r Ã¦tti aÃ° vera lykkja meÃ° fastayrÃ°ingu sem getur veriÃ°
+        // eitthvaÃ° a Ã¾essa leiÃ°:
+   
+        int k = i;
+        while(true)
+            //   i <= k < j
+            //   Allir samanburÃ°ir milli sÃ¦ta p < q Ã­ svÃ¦Ã°inu a[i..j)
+            //   eru Ã­ samrÃ¦mi viÃ° hrÃºguskilyrÃ°i nema e.t.v. Ã­ Ã¾eim
+            //   tilvikum Ã¾egar i=j.
+        {
+            int c = 2*k+1;
+            if(c >= j) {
+                return;
+            }
+            if(c+1 < j && (int)a[c+1] < (int)a[c]) {
+                c = c+1;
+            }
+            E temp = a[k];
+            a[k] = a[c];
+            a[c] = temp;
+            k = a[c];
+        }
     }
 
     // Notkun: rollUp(a,i,j);
-    // Fyrir:  a[i..j) og a[i..j+1) eru svæği í a.
-    //         a[i..j) uppfyllir hrúguskilyrği.
-    // Eftir:  a[i..j+1) inniheldur sömu gildi og áğur,
-    //         en şeim hefur veriğ umrağağ şannig ağ
-    //         a[i..j+1) uppfyllir nú hrúguskilyrği.
+    // Fyrir:  a[i..j) og a[i..j+1) eru svÃ¦Ã°i Ã­ a.
+    //         a[i..j) uppfyllir hrÃºguskilyrÃ°i.
+    // Eftir:  a[i..j+1) inniheldur sÃ¶mu gildi og Ã¡Ã°ur,
+    //         en Ã¾eim hefur veriÃ° umraÃ°aÃ° Ã¾annig aÃ°
+    //         a[i..j+1) uppfyllir nÃº hrÃºguskilyrÃ°i.
     public static<E extends Comparable<? super E>> void rollUp( E[] a, int i, int j )
     {
-        // Hér vantar forritstexta.
-        // Hér ætti ağ vera lykkja meğ fastayrğingu sem getur veriğ
-        // eitthvağ a şessa leiğ:
-        //   ? <= k <= ?
-        //   Allir samanburğir milli sæta p < q í svæğinu a[i..j+1)
-        //   eru í samræmi viğ hrúguskilyrği nema e.t.v. í şeim
-        //   tilvikum şegar ???.
+        // HÃ©r vantar forritstexta.
+        // HÃ©r Ã¦tti aÃ° vera lykkja meÃ° fastayrÃ°ingu sem getur veriÃ°
+        // eitthvaÃ° a Ã¾essa leiÃ°:
+
+        int k = j;
+        while(true) 
+            //   i <= k <= j
+            //   Allir samanburÃ°ir milli sÃ¦ta p < q Ã­ svÃ¦Ã°inu a[i..j+1)
+            //   eru Ã­ samrÃ¦mi viÃ° hrÃºguskilyrÃ°i nema e.t.v. Ã­ Ã¾eim
+            //   tilvikum Ã¾egar i==j.
+        {
+            if(k==0) {
+                return;
+            }
+            int c = (k-1)/2;
+            if((int)a[k] >= (int)a[c]) {
+                return;
+            }
+            E temp = a[k];
+            a[k] = a[c];
+            a[c] = temp;
+            k = c;
+        }
     }
     
     // Notkun: sort(a);
-    // Fyrir:  a er fylki gilda af tagi E (og E er löglegt).
-    // Eftir:  a hefur veriğ rağağ í vaxandi röğ.
+    // Fyrir:  a er fylki gilda af tagi E (og E er lÃ¶glegt).
+    // Eftir:  a hefur veriÃ° raÃ°aÃ° Ã­ vaxandi rÃ¶Ã°.
     public static<E extends Comparable<? super E>> void sort( E[] a )
     {
-        // Hér vantar forritstexta.
-        // Şetta skal útfæra á hrağvirkan hátt, ş.e. O(n log(n)),
-        // annağhvort meğ şví ağ nota einungis rollDown í tveimur
-        // lykkjum, eğa meğ şví ağ nota rollUp í einni lykkju og
-        // rollDown í annarri lykkju.
+        // HÃ©r vantar forritstexta.
+        // Ãetta skal ÃºtfÃ¦ra Ã¡ hraÃ°virkan hÃ¡tt, Ã¾.e. O(n log(n)),
+        // annaÃ°hvort meÃ° Ã¾vÃ­ aÃ° nota einungis rollDown Ã­ tveimur
+        // lykkjum, eÃ°a meÃ° Ã¾vÃ­ aÃ° nota rollUp Ã­ einni lykkju og
+        // rollDown Ã­ annarri lykkju.
     }
     
     // Notkun: int n = pq.count();
-    // Fyrir:  pq er forgangsbiğröğ.
-    // Eftir:  n er fjöldi gilda í pq.
+    // Fyrir:  pq er forgangsbiÃ°rÃ¶Ã°.
+    // Eftir:  n er fjÃ¶ldi gilda Ã­ pq.
     public int count()
     {
-        // Hér vantar forritstexta.
+        return this.n;
     }
     
-    // Skrifiğ lısingu hér
+    // SkrifiÃ° lÃ½singu hÃ©r
     // Notkun: ???
     // Fyrir:  ???
     // Eftir:  ???
     public T deleteMax()
     {
-        // Hér vantar forritstexta.
-        // Notiğ rollDown til ağ útfæra ağgerğina.
-        // Muniğ ağ uppfæra einnig draugabreytuna m.
+        // HÃ©r vantar forritstexta.
+        // NotiÃ° rollDown til aÃ° ÃºtfÃ¦ra aÃ°gerÃ°ina.
+        // MuniÃ° aÃ° uppfÃ¦ra einnig draugabreytuna m.
     }
     
-    // Skrifiğ lısingu hér
+    // SkrifiÃ° lÃ½singu hÃ©r
     // Notkun: ???
     // Fyrir:  ???
     // Eftir:  ???
     public void put( T x )
     {
-        // Hér vantar forritstexta.
-        // Notiğ rollUp til ağ útfæra ağgerğina.
-        // Muniğ ağ uppfæra einnig draugabreytuna m.
-        // Athugiğ ağ undir einhverjum kringumstæğum şurfiğ şiğ ağ
-        // stækka fylkiğ a. Eğlilegt er şá ağ tvöfalda stærğina.
-        // Notiğ viğeigandi fastayrğingu í lykkjunni şegar şiğ
-        // afritiğ frá gamla fylkinu yfir í nıja.
+        // HÃ©r vantar forritstexta.
+        // NotiÃ° rollUp til aÃ° ÃºtfÃ¦ra aÃ°gerÃ°ina.
+        // MuniÃ° aÃ° uppfÃ¦ra einnig draugabreytuna m.
+        // AthugiÃ° aÃ° undir einhverjum kringumstÃ¦Ã°um Ã¾urfiÃ° Ã¾iÃ° aÃ°
+        // stÃ¦kka fylkiÃ° a. EÃ°lilegt er Ã¾Ã¡ aÃ° tvÃ¶falda stÃ¦rÃ°ina.
+        // NotiÃ° viÃ°eigandi fastayrÃ°ingu Ã­ lykkjunni Ã¾egar Ã¾iÃ°
+        // afritiÃ° frÃ¡ gamla fylkinu yfir Ã­ nÃ½ja.
     }
 
-    // Prófiğ ağ keyra 
+    // PrÃ³fiÃ° aÃ° keyra 
     //   java H11 1 2 3 4 10 20 30 40
-    // Şağ ætti ağ skrifa
+    // ÃaÃ° Ã¦tti aÃ° skrifa
     //   1 10 2 20 3 30 4 40
     //   40 4 30 3 20 2 10 1    
     public static void main( String[] args )
