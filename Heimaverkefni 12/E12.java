@@ -40,13 +40,15 @@ public class E12
         // falli� virki samkv�mt l�singu.
 
         Link<T> min = chain;
-        Link<T> discarded = new Link<>();
+        Link<T> discarded = new Link<T>();
+        discarded.head = chain.head;
         Link<T> rest = chain.tail;
-        while(rest.tail != null)
+        while(rest != null)
             //  allir hlekkir í gamla chain eru í rest , discarded eða
             //  hausnum á min,
             //  
         {
+
             int comparisonResult = min.head.compareTo(rest.head);
             if(comparisonResult > 0) {
                 min.tail = discarded;
@@ -202,7 +204,7 @@ public class E12
             return y;
         }
         Link<T> z = x;
-        while( z.tail != null && z.tail.head.compareTo(y.head) < 0) 
+        while( z.tail != null && z.tail.head.compareTo(y.head) < 0)
             //
             //
             //
@@ -226,7 +228,8 @@ public class E12
     {
         // H�r vantar forritstexta.
         Link<T> z = new Link<T>();
-        while(x != null) 
+        z.head = x.head;
+        while(x != null)
             //
             //
             //
