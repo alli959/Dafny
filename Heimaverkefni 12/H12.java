@@ -30,8 +30,44 @@ public class H12
         // þegar munar einum á fjölda hlekkja.
         // Reyndar er fleiri en ein þægileg leið til að leysa
         // þetta í lykkju.
-        ???
+        Link<T> y = new Link<T>();
+        Link<T> z = new Link<T>();
+        Link<T> temp = new Link<T>();
+
+
+        while(chain != null) 
+        
+            //  y inniheldur einum fleiri eða jafn marga hlekki
+            //  og z,
+            //  chain þarf að innihalda að minnasta kosti einn hlekk
+            //  þá verður y með einum fleiri hlekki en z,
+            //  allir hlekkir í z og y eru í gamla chain
+
+        
+        {
+
+
+            if(chain.head == null || chain.tail == null) {
+                break;
+            }
+            temp = chain.tail;
+            chain.tail = y;
+            y = chain;
+            chain = temp;
+            if(chain.head == null || chain.tail == null) {
+                break;
+            }
+            temp = chain.tail;
+            chain.tail = z;
+            z = chain;
+            chain = temp;
+        }
+        w[0] = y;
+        w[1] = z;
     }
+
+
+
 
     // Notkun: Link<T> y = mergeSort(x,w);
     // Fyrir:  x er lögleg keðja þar sem hlekkirnir innihalda
@@ -47,8 +83,23 @@ public class H12
     public static<T extends Comparable<? super T>>
     Link<T> mergeSort( Link<T> x, Link<T>[] w )
     {
+        Link<T> y = new Link<T>();
+        Link<T> z = new Link<T>();
         // Hér vantar forritstexta.
-        ???
+        if(x.head != null || x.tail.head != null) {
+            split(x,w);
+            y = w[0];
+            z = w[1];
+            y = mergeSort(y,w);
+            z = mergeSort(z,w);
+            y = merge(y,z);
+            
+        }
+        else {
+            return x;
+        }
+            return y;
+
     }
     
     // Notkun: Link<T> z = merge(x,y);
@@ -71,7 +122,38 @@ public class H12
         // hlekk úr x eða y, eftir því hvor inniheldur minna
         // gildi. Þægilegt er einnig að viðhalda því að
         // einhver breyta vísi á aftasta hlekk þeirrar keðju.
-        ???
+        Link<T> z = new Link<T>();
+        Link<T> w = new Link<T>();
+
+
+        if(x.head.compareTo(y.head) < 0) {
+            z = x;
+            w = z;
+            x = x.tail;
+        }
+        else {
+            z = y;
+            w = z;
+            y = y.tail;
+        }
+
+        //  z er keðja í vandi röð,
+        //  hvert hlekkur í z er minni hlekkurinn af
+        //  x og y meðan við compareTo
+        while (x != null && y!= null) {
+            if(x.head.compareTo(y.head) < 0) {
+                w.tail = x;
+                w = x;
+                x = x.tail;
+            }
+            else {
+                w.tail = y;
+                w = y;
+                y = y.tail;
+            }
+        }
+        w.tail = null;
+        return z;
     }
     
     // Notkun: Link<T> x = makeChain(a,i,j);
@@ -92,7 +174,7 @@ public class H12
     //   javac H12.java
     //   java H12 1 2 3 4 3 2 1 10 30 20
     // og sýnið útkomuna í athugasemd hér:
-         ???
+         //Stack Overflow Error
     public static void main( String[] args )
     {
         Link<String> x = makeChain(args,0,args.length);

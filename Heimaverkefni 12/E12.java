@@ -41,18 +41,18 @@ public class E12
 
         Link<T> min = chain;
         Link<T> discarded = new Link<T>();
-        discarded.head = chain.head;
         Link<T> rest = chain.tail;
-        while(rest != null)
+        while(rest != null && rest.head != null)
             //  allir hlekkir í gamla chain eru í rest , discarded eða
             //  hausnum á min,
-            //  
+            //  fyrir sérhvern hlekk í discarded er hausinn á min
+            //  minni eða jafn honum.
         {
 
-            int comparisonResult = min.head.compareTo(rest.head);
-            if(comparisonResult > 0) {
+
+            if(min.head.compareTo(rest.head) > 0) {
                 min.tail = discarded;
-                min.head = rest.head;
+                min = rest;
                 rest = rest.tail;
                 
             }
@@ -69,85 +69,6 @@ public class E12
 
 
 
-
-        /*Link<T> resA = new Link<>();
-        resA.tail = chain.tail;
-        Link<T> resB = new Link<>();
-        T min = chain.head;
-        
-        while(resA.tail != null) 
-            //  |res[0]| + |res[1]| == |upphaflega chain|,
-            //  res[0] vísar á einhvern hlekk í upphaflegu chain keðjunni,
-        {
-            T head = resA.tail.head;
-            int comparisonResult = head.compareTo(min);
-            if(comparisonResult < 0) {
-
-                resB.tail = resB;
-                resB.head = min;
-                min = head;
-            }
-            else {
-                resB.tail = resB;
-                resB.head = head;
-                
-            }
-            resA = resA.tail;
-        
-            
-        
-        }
-        resA.head = min;
-        res[0] = resA;
-        res[1] = resB;*/
-        
-        
-        
-        /*
-        T min = chain.head; //initialize the min value with the header
-        res[0] = chain;
-        chain = chain.tail;
-        while(chain != null)
-            
-            //  |res[0]| + |res[1]| == |upphaflega chain|,
-            //  res[0] vísar á einhvern hlekk í upphaflegu chain keðjunni,
-
-            
-        {
-            
-            int comparisonResult = chain.head.compareTo(min);
-            if(comparisonResult < 0) {
-                if(res[1] != null) {
-                    Link<T> temp = res[1];
-                    res[1].tail = temp;
-                    res[1].head = res[0].head;
-                }
-                else {
-                    Link<T> temp = new Link<>();
-                    temp.head = res[0].head;
-                    res[1] = temp;
-                }
-                res[0].head = chain.head;
-                chain = chain.tail;
-                res[0].tail = chain;
-                min = res[0].head;
-            }
-            else{
-                if(res[1] != null) {
-                    Link<T> temp = res[1];
-                    System.out.println(res[1].head);
-                    res[1].tail = temp;
-                    res[1].head = chain.head;
-                }
-                else {
-                    Link<T> temp = new Link<>();
-                    temp.head = chain.head;
-                    res[1] = temp;
-                }
-                chain = chain.tail;
-                res[0].tail = chain;
-            }
-        }*/
 
     }
 
@@ -176,8 +97,14 @@ public class E12
         Link<T> rest = res[1];
         Link<T> z = res[0];
         Link<T> w = z;
-        while( rest != null && rest.head != null) {
+        while( rest != null && rest.head != null) 
+        
+            //  allir hlekkir í gamla x eru í rest eða z
+            //  fyrir sérhvern hlekk í rest er hausinn á z
+            //  minni eða jafn honum.
+        {
             removeMinLink(rest, res);
+            
             rest = res[1];
             w.tail = res[0];
             w = w.tail;
@@ -198,16 +125,17 @@ public class E12
     public static<T extends Comparable<? super T>>
     Link<T> insert( Link<T> x, Link<T> y )
     {
+
         // H�r vantar forritstexta.
-        if(x == null || y.head.compareTo(x.head) <= 0 ) {
+        if(x.head == null || y.head.compareTo(x.head) <= 0 ) {
             y.tail = x;
             return y;
         }
         Link<T> z = x;
-        while( z.tail != null && z.tail.head.compareTo(y.head) < 0)
-            //
-            //
-            //
+        while( z.tail.head != null && z.tail.head.compareTo(y.head) < 0)
+            // z er keðja í vaxandi röð sem inniheldur alla hlekki
+            // úr x og hlekkinn y.
+    
         {
             z = z.tail;
         }
@@ -228,15 +156,16 @@ public class E12
     {
         // H�r vantar forritstexta.
         Link<T> z = new Link<T>();
-        z.head = x.head;
-        while(x != null)
-            //
-            //
-            //
+        Link<T> rest = x;
+        while(rest.tail != null && rest.tail.head != null)
+            //   sérhver hlekkur í upprunalega x er annaðhvort 
+            //   í keðjunum rest eða z sem innihalda lögleg gildi
+            //   að tagi T,
+            //   z er í vaxandi röð
         {
-            Link<T> temp = x.tail;
-            z = insert(z,x);
-            x = temp;
+            Link<T> temp = rest.tail;
+            z = insert(z,rest);
+            rest = temp;
         }
         return z;
     }
@@ -259,7 +188,8 @@ public class E12
     //   javac E12.java
     //   java E12 1 2 3 4 3 2 1 10 30 20
     // og s�ni� �tkomuna � athugasemd h�r:
-        //???
+        // Selection Sort: 1 1 2 2 3 3 4
+        // Insertion Sort: 1 1 10 2 2 30 3 3 30 4 null
     public static void main( String[] args )
     {
         Link<String> x = makeChain(args,0,args.length);
